@@ -6,356 +6,1155 @@
   <title>Enterprise AI Platform Chronicles</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      max-width: 820px;
-      margin: 0 auto;
-      padding: 40px 24px;
-      line-height: 1.7;
+      background: #fcfcfd;
       color: #2d2d2d;
-      background: #fff;
-    }
-    .hero {
-      padding: 48px 36px;
-      border-radius: 14px;
-      background: linear-gradient(135deg, #1a1a2e, #16213e);
-      color: #fff;
-      margin-bottom: 48px;
-    }
-    .hero h1 {
-      font-size: 1.9rem;
-      font-weight: 800;
-      margin-bottom: 10px;
-    }
-    .hero p {
-      font-size: 0.92rem;
-      color: #ccc;
       line-height: 1.7;
-      max-width: 640px;
+      overflow-x: hidden;
     }
-    .month-header {
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: #1a1a2e;
-      margin-top: 48px;
-      margin-bottom: 24px;
-      padding-bottom: 8px;
-      border-bottom: 3px solid #7c3aed;
-      display: inline-block;
+
+    /* Nav */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 1000;
+      background: rgba(255,255,255,0.97); backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
     }
-    .week {
-      margin-bottom: 36px;
-      padding: 24px;
-      background: #fafafa;
-      border: 1px solid #eee;
-      border-radius: 12px;
-      transition: box-shadow 0.2s;
+    .nav-inner {
+      max-width: 1100px; margin: 0 auto; padding: 0.9rem 2rem;
+      display: flex; justify-content: space-between; align-items: center;
     }
-    .week:hover {
-      box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    .nav-logo { font-size: 1rem; font-weight: 700; color: #1a1a1a; letter-spacing: -0.02em; }
+    .nav-logo span { color: #7c3aed; }
+    .nav-links { display: flex; gap: 1.6rem; list-style: none; }
+    .nav-links a {
+      color: #666; text-decoration: none; font-size: 0.82rem;
+      font-weight: 500; transition: color 0.3s;
     }
-    .week h3 {
-      font-size: 1.05rem;
-      color: #1a1a1a;
-      margin-bottom: 4px;
+    .nav-links a:hover { color: #7c3aed; }
+    .nav-dropdown { position: relative; }
+    .nav-sub {
+      display: none; position: absolute; top: 100%; left: 0;
+      background: #fff; border: 1px solid #eee; border-radius: 8px;
+      padding: 0.5rem 0; list-style: none; min-width: 130px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08); z-index: 100;
     }
-    .week .objective {
-      font-size: 0.85rem;
-      color: #7c3aed;
-      font-weight: 600;
-      margin-bottom: 12px;
+    .nav-dropdown:hover .nav-sub { display: block; }
+    .nav-sub li { padding: 0; }
+    .nav-sub a {
+      display: block; padding: 0.4rem 1rem; font-size: 0.78rem; color: #555;
     }
-    .week h4 {
-      font-size: 0.82rem;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: #888;
-      margin-top: 14px;
-      margin-bottom: 6px;
+    .nav-sub a:hover { color: #7c3aed; background: #f9f5ff; }
+    .hamburger { display: none; flex-direction: column; gap: 4px; cursor: pointer; }
+    .hamburger span { width: 22px; height: 2px; background: #1a1a1a; }
+
+    /* Hero */
+    .hero {
+      padding: 140px 2rem 80px;
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1.2fr; gap: 3rem; align-items: start;
     }
-    .week ul {
-      padding-left: 18px;
-      margin-bottom: 8px;
+    .hero-text h1 {
+      font-size: clamp(2.2rem, 5vw, 3.2rem); font-weight: 800;
+      color: #1a1a1a; line-height: 1.1; margin-bottom: 16px;
     }
-    .week li {
-      font-size: 0.88rem;
-      color: #444;
-      margin-bottom: 4px;
+    .hero-text h1 span { color: #7c3aed; }
+    .hero-text p {
+      font-size: 0.95rem; color: #555; line-height: 1.8; margin-bottom: 24px; max-width: 520px;
     }
-    .week p {
-      font-size: 0.88rem;
-      color: #444;
-      margin-bottom: 6px;
+    .hero-cta {
+      display: inline-block; padding: 0.7rem 1.6rem; background: #7c3aed;
+      color: #fff; border-radius: 8px; text-decoration: none; font-size: 0.88rem;
+      font-weight: 600; transition: all 0.3s;
     }
-    .week .lesson {
-      font-size: 0.88rem;
-      color: #555;
-      font-style: italic;
-      border-left: 3px solid #7c3aed;
-      padding-left: 12px;
-      margin-top: 12px;
-    }
-    .retrospective {
-      background: linear-gradient(135deg, #f5f0ff, #fafafa);
-      border: 1px solid #e0d4f5;
-    }
-    footer {
-      text-align: center;
-      padding: 40px 20px;
-      color: #999;
-      font-size: 0.78rem;
-      border-top: 1px solid #f0f0f0;
-      margin-top: 48px;
-    }
-    footer a { color: #7c3aed; text-decoration: none; }
-  </style>
+    .hero-cta:hover { background: #6d28d9; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(124,58,237,0.25); }
+</style>
 </head>
 <body>
 
-<div class="hero">
-  <h1>Enterprise AI Platform Chronicles</h1>
-  <p>An engineering logbook documenting the journey of building a production-grade enterprise AI platform. The entries focus on architectural decisions, technical challenges, experiments, and lessons learned. Company-specific implementation details have been omitted or generalized.</p>
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">Enterprise AI Platform<span>.</span></div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#hero">Home</a></li>
+      <li><a href="#architecture">Current Architecture</a></li>
+      <li><a href="#entaingpt">EntainGPT PoC</a></li>
+      <li class="nav-dropdown">
+        <a href="#chronicles">Chronicles</a>
+        <ul class="nav-sub">
+          <li><a href="#sep">September</a></li>
+          <li><a href="#oct">October</a></li>
+          <li><a href="#nov">November</a></li>
+        </ul>
+      </li>
+      <li><a href="https://github.com/sprasadhpy" target="_blank">GitHub</a></li>
+    </ul>
+    <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero" id="hero">
+  <div class="hero-text">
+    <h1>Building Production-Grade <span>Enterprise AI</span> Systems</h1>
+    <p>An engineering logbook documenting architectural decisions, technical challenges, experiments, and lessons learned from building a production-grade enterprise AI platform. Company-specific details have been generalized.</p>
+    <a href="#chronicles" class="hero-cta">Read the Chronicles ↓</a>
+    <p style="margin-top:1.2rem; font-size:0.8rem; color:#94a3b8;">Squad: Prometheus &nbsp;|&nbsp; Shyaam Prasadh, AI Engineering Manager</p>
+    <img src="https://raw.githubusercontent.com/sprasadhpy/enterprise-llm-platform/main/docs/assets/EntainGPTlogo.png" alt="EntainGPT Logo" style="margin-top:1rem; height:250px; border-radius:8px;">
+    <div style="margin-top:1rem;">
+      <a href="https://raw.githubusercontent.com/sprasadhpy/enterprise-llm-platform/main/docs/assets/EntainGPT%20%E2%80%94%20Safe%20GenAI%20for%20Entain-3.pptx" download style="display:inline-flex; align-items:center; gap:6px; padding:0.5rem 1.2rem; background:#f5f0ff; color:#7c3aed; border:1px solid rgba(124,58,237,0.2); border-radius:8px; text-decoration:none; font-size:0.82rem; font-weight:600; transition:all 0.3s;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        EntainGPT — Safe GenAI for Entain (Slides) · Feb 2026
+      </a>
+      <a href="https://drive.google.com/file/d/1_XUIjOZIr_Tfe-32-dPLZPaLGtcBTLD9/view?usp=drive_link" target="_blank" style="display:inline-flex; align-items:center; gap:6px; padding:0.5rem 1.2rem; background:#f5f0ff; color:#7c3aed; border:1px solid rgba(124,58,237,0.2); border-radius:8px; text-decoration:none; font-size:0.82rem; font-weight:600; transition:all 0.3s; margin-top:0.6rem;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Data Science — Show and Tell Demo
+      </a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <svg viewBox="0 0 520 700" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:480px;">
+      <defs>
+        <style>
+          .hv-node { opacity: 0; }
+          .hv-line { stroke-dasharray: 60; stroke-dashoffset: 60; }
+          .hv-n1 { animation: hvF 0.5s ease forwards 0.2s; }
+          .hv-n2 { animation: hvF 0.5s ease forwards 0.5s; }
+          .hv-n3 { animation: hvF 0.5s ease forwards 0.8s; }
+          .hv-n4 { animation: hvF 0.5s ease forwards 1.1s; }
+          .hv-n5 { animation: hvF 0.5s ease forwards 1.4s; }
+          .hv-n6 { animation: hvF 0.5s ease forwards 1.4s; }
+          .hv-n7 { animation: hvF 0.5s ease forwards 1.4s; }
+          .hv-n8 { animation: hvF 0.5s ease forwards 1.7s; }
+          .hv-n9 { animation: hvF 0.5s ease forwards 2.0s; }
+          .hv-n10 { animation: hvF 0.5s ease forwards 2.0s; }
+          .hv-n11 { animation: hvF 0.5s ease forwards 2.0s; }
+          .hv-n12 { animation: hvF 0.5s ease forwards 2.3s; }
+          .hv-n13 { animation: hvF 0.5s ease forwards 2.6s; }
+          .hv-n14 { animation: hvF 0.5s ease forwards 2.9s; }
+          .hv-n15 { animation: hvF 0.5s ease forwards 3.2s; }
+          .hv-panel { animation: hvF 0.6s ease forwards 3.5s; }
+          .hv-l1 { animation: hvD 0.4s ease forwards 0.4s; }
+          .hv-l2 { animation: hvD 0.4s ease forwards 0.7s; }
+          .hv-l3 { animation: hvD 0.4s ease forwards 1.0s; }
+          .hv-l4 { animation: hvD 0.4s ease forwards 1.3s; }
+          .hv-l5 { animation: hvD 0.4s ease forwards 1.3s; }
+          .hv-l6 { animation: hvD 0.4s ease forwards 1.3s; }
+          .hv-l7 { animation: hvD 0.4s ease forwards 1.6s; }
+          .hv-l8 { animation: hvD 0.4s ease forwards 1.9s; }
+          .hv-l9 { animation: hvD 0.4s ease forwards 1.9s; }
+          .hv-l10 { animation: hvD 0.4s ease forwards 1.9s; }
+          .hv-l11 { animation: hvD 0.4s ease forwards 2.2s; }
+          .hv-l12 { animation: hvD 0.4s ease forwards 2.5s; }
+          .hv-l13 { animation: hvD 0.4s ease forwards 2.8s; }
+          .hv-l14 { animation: hvD 0.4s ease forwards 3.1s; }
+          .hv-pulse { animation: hvP 2.5s ease-in-out infinite 3.5s; }
+          @keyframes hvF { to { opacity: 1; } }
+          @keyframes hvD { to { stroke-dashoffset: 0; } }
+          @keyframes hvP {
+            0%, 100% { filter: drop-shadow(0 0 0px #7c3aed); }
+            50% { filter: drop-shadow(0 0 8px #7c3aed); }
+          }
+        </style>
+        <filter id="shadow">
+          <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.08"/>
+        </filter>
+      </defs>
+
+      <!-- User -->
+      <g class="hv-node hv-n1">
+        <rect x="195" y="10" width="130" height="34" rx="8" fill="#7C3AED" filter="url(#shadow)"/>
+        <text x="260" y="32" text-anchor="middle" fill="#fff" font-size="12" font-weight="700" font-family="inherit">User</text>
+      </g>
+
+      <!-- Enterprise Gateway -->
+      <g class="hv-node hv-n2">
+        <rect x="170" y="72" width="180" height="34" rx="8" fill="#1E293B" filter="url(#shadow)"/>
+        <text x="260" y="92" text-anchor="middle" fill="#e0e0e0" font-size="10" font-weight="600" font-family="inherit">Enterprise Gateway</text>
+        <text x="260" y="103" text-anchor="middle" fill="#94a3b8" font-size="8" font-family="inherit">Authentication + SSO</text>
+      </g>
+      <!-- Model Router -->
+      <g class="hv-node hv-n3 hv-pulse">
+        <rect x="180" y="140" width="160" height="34" rx="8" fill="#7C3AED" filter="url(#shadow)"/>
+        <text x="260" y="160" text-anchor="middle" fill="#fff" font-size="10" font-weight="600" font-family="inherit">Model Router</text>
+      </g>
+      <!-- RAG -->
+      <g class="hv-node hv-n4">
+        <rect x="170" y="210" width="180" height="34" rx="8" fill="#1E293B" filter="url(#shadow)"/>
+        <text x="260" y="232" text-anchor="middle" fill="#e0e0e0" font-size="10" font-weight="600" font-family="inherit">RAG Orchestrator</text>
+      </g>
+      <!-- Knowledge Bases -->
+      <g class="hv-node hv-n5"><rect x="60" y="280" width="120" height="32" rx="7" fill="#fff" stroke="#e2e8f0" stroke-width="1" filter="url(#shadow)"/><text x="120" y="300" text-anchor="middle" fill="#1E293B" font-size="9" font-weight="600" font-family="inherit">Confluence</text></g>
+      <g class="hv-node hv-n6"><rect x="200" y="280" width="120" height="32" rx="7" fill="#fff" stroke="#e2e8f0" stroke-width="1" filter="url(#shadow)"/><text x="260" y="300" text-anchor="middle" fill="#1E293B" font-size="9" font-weight="600" font-family="inherit">Jira</text></g>
+      <g class="hv-node hv-n7"><rect x="340" y="280" width="120" height="32" rx="7" fill="#fff" stroke="#e2e8f0" stroke-width="1" filter="url(#shadow)"/><text x="400" y="300" text-anchor="middle" fill="#1E293B" font-size="9" font-weight="600" font-family="inherit">Snowflake</text></g>
+      <!-- Context -->
+      <g class="hv-node hv-n8"><rect x="180" y="345" width="160" height="30" rx="7" fill="#22C55E" filter="url(#shadow)"/><text x="260" y="364" text-anchor="middle" fill="#fff" font-size="10" font-weight="600" font-family="inherit">Enterprise Context</text></g>
+      <!-- Models -->
+      <g class="hv-node hv-n9"><rect x="70" y="410" width="100" height="30" rx="7" fill="#1E293B" filter="url(#shadow)"/><text x="120" y="429" text-anchor="middle" fill="#e0e0e0" font-size="10" font-weight="600" font-family="inherit">GPT-5</text></g>
+      <g class="hv-node hv-n10"><rect x="210" y="410" width="100" height="30" rx="7" fill="#1E293B" filter="url(#shadow)"/><text x="260" y="429" text-anchor="middle" fill="#e0e0e0" font-size="10" font-weight="600" font-family="inherit">Claude 4</text></g>
+      <g class="hv-node hv-n11"><rect x="350" y="410" width="100" height="30" rx="7" fill="#1E293B" filter="url(#shadow)"/><text x="400" y="429" text-anchor="middle" fill="#e0e0e0" font-size="10" font-weight="600" font-family="inherit">Nova</text></g>
+      <!-- Response -->
+      <g class="hv-node hv-n12"><rect x="175" y="478" width="170" height="34" rx="8" fill="#7C3AED" filter="url(#shadow)"/><text x="260" y="500" text-anchor="middle" fill="#fff" font-size="10" font-weight="600" font-family="inherit">Response Generator</text></g>
+      <g class="hv-node hv-n13"><rect x="195" y="546" width="130" height="30" rx="7" fill="#22C55E" filter="url(#shadow)"/><text x="260" y="565" text-anchor="middle" fill="#fff" font-size="10" font-weight="600" font-family="inherit">User Response</text></g>
+      <g class="hv-node hv-n14"><rect x="185" y="610" width="150" height="28" rx="7" fill="#fff" stroke="#7C3AED" stroke-width="1.2" filter="url(#shadow)"/><text x="260" y="628" text-anchor="middle" fill="#7C3AED" font-size="9" font-weight="600" font-family="inherit">Observability</text></g>
+      <!-- Lines -->
+      <line class="hv-line hv-l1" x1="260" y1="44" x2="260" y2="72" stroke="#7C3AED" stroke-width="1.5"/>
+      <line class="hv-line hv-l2" x1="260" y1="106" x2="260" y2="140" stroke="#64748b" stroke-width="1.2"/>
+      <line class="hv-line hv-l3" x1="260" y1="174" x2="260" y2="210" stroke="#64748b" stroke-width="1.2"/>
+      <line class="hv-line hv-l4" x1="210" y1="244" x2="120" y2="280" stroke="#22C55E" stroke-width="1.2"/>
+      <line class="hv-line hv-l4" x1="260" y1="244" x2="260" y2="280" stroke="#22C55E" stroke-width="1.2"/>
+      <line class="hv-line hv-l4" x1="310" y1="244" x2="400" y2="280" stroke="#22C55E" stroke-width="1.2"/>
+      <line class="hv-line hv-l5" x1="120" y1="312" x2="220" y2="345" stroke="#94a3b8" stroke-width="1"/>
+      <line class="hv-line hv-l5" x1="260" y1="312" x2="260" y2="345" stroke="#94a3b8" stroke-width="1"/>
+      <line class="hv-line hv-l5" x1="400" y1="312" x2="300" y2="345" stroke="#94a3b8" stroke-width="1"/>
+      <line class="hv-line hv-l6" x1="220" y1="375" x2="120" y2="410" stroke="#64748b" stroke-width="1.2"/>
+      <line class="hv-line hv-l6" x1="260" y1="375" x2="260" y2="410" stroke="#64748b" stroke-width="1.2"/>
+      <line class="hv-line hv-l6" x1="300" y1="375" x2="400" y2="410" stroke="#64748b" stroke-width="1.2"/>
+      <line class="hv-line hv-l7" x1="120" y1="440" x2="215" y2="478" stroke="#7C3AED" stroke-width="1.2"/>
+      <line class="hv-line hv-l7" x1="260" y1="440" x2="260" y2="478" stroke="#7C3AED" stroke-width="1.2"/>
+      <line class="hv-line hv-l7" x1="400" y1="440" x2="305" y2="478" stroke="#7C3AED" stroke-width="1.2"/>
+      <line class="hv-line hv-l8" x1="260" y1="512" x2="260" y2="546" stroke="#22C55E" stroke-width="1.5"/>
+      <line class="hv-line hv-l8" x1="260" y1="576" x2="260" y2="610" stroke="rgba(124,58,237,0.4)" stroke-width="1.2" stroke-dasharray="4,3"/>
+
+      <!-- Side Panel: Multi-Model Support -->
+      <g class="hv-node hv-panel" opacity="0">
+        <rect x="5" y="400" width="52" height="105" rx="6" fill="#fff" stroke="#e2e8f0" stroke-width="0.8" filter="url(#shadow)"/>
+        <text x="31" y="414" text-anchor="middle" fill="#7C3AED" font-size="6" font-weight="700" font-family="inherit">Multi-Model</text>
+        <text x="31" y="428" text-anchor="middle" fill="#64748b" font-size="6" font-family="inherit">GPT-5</text>
+        <text x="31" y="440" text-anchor="middle" fill="#64748b" font-size="6" font-family="inherit">Claude</text>
+        <text x="31" y="452" text-anchor="middle" fill="#64748b" font-size="6" font-family="inherit">Amazon Nova</text>
+        <text x="31" y="464" text-anchor="middle" fill="#64748b" font-size="6" font-family="inherit">Gemini</text>
+        <text x="31" y="476" text-anchor="middle" fill="#64748b" font-size="6" font-family="inherit">Local Models</text>
+      </g>
+
+      <!-- Side Panel: Enterprise Knowledge -->
+      <g class="hv-node hv-panel" opacity="0">
+        <rect x="463" y="240" width="55" height="135" rx="6" fill="#fff" stroke="#e2e8f0" stroke-width="0.8" filter="url(#shadow)"/>
+        <text x="490" y="254" text-anchor="middle" fill="#22C55E" font-size="6" font-weight="700" font-family="inherit">Knowledge</text>
+        <text x="490" y="268" text-anchor="middle" fill="#64748b" font-size="6" font-family="inherit">HR Policies</text>
+        <text x="490" y="280" text-anchor="middle" fill="#64748b" font-size="6" font-family="inherit">Eng Docs</text>
+        <text x="490" y="292" text-anchor="middle" fill="#64748b" font-size="6" font-family="inherit">Security</text>
+        <text x="490" y="304" text-anchor="middle" fill="#64748b" font-size="6" font-family="inherit">Confluence</text>
+        <text x="490" y="316" text-anchor="middle" fill="#64748b" font-size="6" font-family="inherit">Jira</text>
+        <text x="490" y="328" text-anchor="middle" fill="#64748b" font-size="6" font-family="inherit">SharePoint</text>
+        <text x="490" y="340" text-anchor="middle" fill="#64748b" font-size="6" font-family="inherit">Snowflake</text>
+        <text x="490" y="352" text-anchor="middle" fill="#64748b" font-size="6" font-family="inherit">Wikis</text>
+      </g>
+
+      <!-- Side Panel: Enterprise Services -->
+      <g class="hv-node hv-panel" opacity="0">
+        <rect x="418" y="55" width="62" height="115" rx="6" fill="#fff" stroke="#e2e8f0" stroke-width="0.8" filter="url(#shadow)"/>
+        <text x="449" y="69" text-anchor="middle" fill="#1E293B" font-size="6" font-weight="700" font-family="inherit">Services</text>
+        <text x="449" y="82" text-anchor="middle" fill="#64748b" font-size="6" font-family="inherit">Authentication</text>
+        <text x="449" y="94" text-anchor="middle" fill="#64748b" font-size="6" font-family="inherit">Authorization</text>
+        <text x="449" y="106" text-anchor="middle" fill="#64748b" font-size="6" font-family="inherit">Logging</text>
+        <text x="449" y="118" text-anchor="middle" fill="#64748b" font-size="6" font-family="inherit">Guardrails</text>
+        <text x="449" y="130" text-anchor="middle" fill="#64748b" font-size="6" font-family="inherit">Observability</text>
+        <text x="449" y="142" text-anchor="middle" fill="#64748b" font-size="6" font-family="inherit">Audit</text>
+        <text x="449" y="154" text-anchor="middle" fill="#64748b" font-size="6" font-family="inherit">Feedback</text>
+      </g>
+
+    </svg>
+  </div>
 </div>
 
-<!-- SEPTEMBER 2025 -->
-<h2 class="month-header">September 2025</h2>
+<style>
+    .stats-bar {
+      max-width: 1100px; margin: 0 auto; padding: 0 2rem;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem;
+      margin-bottom: 3rem;
+    }
+    .stat-card {
+      text-align: center; padding: 1.5rem 1rem;
+      background: #fff; border: 1px solid #eee; border-radius: 10px;
+    }
+    .stat-card .num { font-size: 1.6rem; font-weight: 800; color: #7c3aed; }
+    .stat-card .lbl { font-size: 0.75rem; color: #777; text-transform: uppercase; letter-spacing: 0.03em; margin-top: 4px; }
 
-<div class="week">
-  <h3>Week 1 — Project Kickoff</h3>
-  <p class="objective">Objective: Define the vision and scope of the enterprise AI platform.</p>
-  <h4>Questions</h4>
-  <ul>
-    <li>What problem are we solving?</li>
-    <li>Who are the primary users?</li>
-    <li>What does "enterprise-ready" actually mean?</li>
-    <li>What are the non-functional requirements?</li>
-  </ul>
-  <h4>Decisions</h4>
-  <ul>
-    <li>AI assistant rather than a generic chatbot.</li>
-    <li>Security-first architecture.</li>
-    <li>Modular design to support multiple models in the future.</li>
-  </ul>
-  <h4>Deliverables</h4>
-  <ul>
-    <li>Initial architecture diagram</li>
-    <li>Technology evaluation</li>
-    <li>Project roadmap</li>
-  </ul>
-  <p class="lesson">Building enterprise AI starts with understanding business workflows, not choosing a language model.</p>
+    /* Architecture Preview */
+    .arch-preview {
+      max-width: 1100px; margin: 0 auto 3rem; padding: 2.5rem;
+      background: #fff; border: 1px solid #eee; border-radius: 14px; text-align: center;
+    }
+    .arch-preview h2 { font-size: 1.2rem; color: #1a1a1a; margin-bottom: 6px; }
+    .arch-preview p { font-size: 0.85rem; color: #888; }
+
+    /* Timeline */
+    .chronicles {
+      max-width: 1100px; margin: 0 auto; padding: 0 2rem 4rem;
+      display: grid; grid-template-columns: 200px 1fr; gap: 0;
+    }
+    .timeline-nav {
+      position: sticky; top: 80px; align-self: start; padding-right: 2rem;
+    }
+    .timeline-nav ul { list-style: none; position: relative; padding-left: 16px; }
+    .timeline-nav ul::before {
+      content: ''; position: absolute; left: 5px; top: 0; bottom: 0;
+      width: 2px; background: linear-gradient(to bottom, #7c3aed, #e0e0e0);
+      border-radius: 2px;
+    }
+    .timeline-nav li {
+      position: relative; margin-bottom: 2rem; padding-left: 18px;
+    }
+    .timeline-nav li::before {
+      content: ''; position: absolute; left: -12px; top: 6px;
+      width: 10px; height: 10px; border-radius: 50%;
+      background: #e0e0e0; border: 2px solid #fff; box-shadow: 0 0 0 2px #e0e0e0;
+      transition: all 0.3s;
+    }
+    .timeline-nav li.active::before { background: #7c3aed; box-shadow: 0 0 0 2px #7c3aed; }
+    .timeline-nav li a { text-decoration: none; color: #888; font-size: 0.82rem; font-weight: 500; transition: color 0.3s; }
+    .timeline-nav li.active a { color: #7c3aed; font-weight: 700; }
+    .timeline-nav li .month-label { font-size: 0.72rem; color: #aaa; display: block; margin-top: 2px; }
+
+    /* Content */
+    .chronicles-content { padding-left: 2rem; border-left: 1px solid #eee; }
+    .month-section { margin-bottom: 3rem; }
+    .month-header {
+      font-size: 1.3rem; font-weight: 700; color: #1a1a1a;
+      margin-bottom: 1.5rem; padding-bottom: 8px;
+      border-bottom: 3px solid #7c3aed; display: inline-block;
+    }
+
+    /* Week Cards */
+    .week-card {
+      background: #fff; border: 1px solid #eee; border-radius: 12px;
+      padding: 24px 28px; margin-bottom: 1.5rem;
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease, box-shadow 0.2s;
+    }
+    .week-card.visible { opacity: 1; transform: translateY(0); }
+    .week-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.04); }
+    .week-card-top {
+      display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;
+    }
+    .week-card h3 { font-size: 1rem; color: #1a1a1a; margin-bottom: 2px; }
+    .week-card .week-date { font-size: 0.75rem; color: #aaa; white-space: nowrap; }
+    .week-card .week-icon { font-size: 1.2rem; margin-right: 8px; }
+    .week-card .objective {
+      font-size: 0.82rem; color: #7c3aed; font-weight: 600; margin-bottom: 12px;
+    }
+    .week-card h4 {
+      font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.04em;
+      color: #999; margin-top: 14px; margin-bottom: 6px;
+    }
+    .week-card ul { padding-left: 16px; margin-bottom: 6px; }
+    .week-card li { font-size: 0.86rem; color: #444; margin-bottom: 3px; }
+    .week-card .lesson {
+      font-size: 0.86rem; color: #555; font-style: italic;
+      border-left: 3px solid #7c3aed; padding-left: 12px; margin-top: 14px;
+    }
+    .week-card.retro {
+      background: linear-gradient(135deg, #f9f5ff, #fff);
+      border-color: #e8dff5;
+    }
+
+    /* Footer */
+    footer {
+      max-width: 1100px; margin: 0 auto; padding: 3rem 2rem;
+      border-top: 1px solid #eee; text-align: center;
+    }
+    footer .footer-links { display: flex; justify-content: center; gap: 2rem; margin-bottom: 1rem; }
+    footer .footer-links a { color: #666; text-decoration: none; font-size: 0.82rem; transition: color 0.3s; }
+    footer .footer-links a:hover { color: #7c3aed; }
+    footer p { color: #999; font-size: 0.78rem; }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; padding-top: 120px; }
+      .hero-visual { display: none; }
+      .stats-bar { grid-template-columns: repeat(2, 1fr); }
+      .chronicles { grid-template-columns: 1fr; }
+      .timeline-nav { display: none; }
+      .chronicles-content { padding-left: 0; border-left: none; }
+      .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0;
+        background: rgba(255,255,255,0.98); flex-direction: column; padding: 1.5rem; gap: 1rem; }
+      .nav-links.open { display: flex; }
+      .hamburger { display: flex; }
+    }
+</style>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat-card"><div class="num">12</div><div class="lbl">Engineering Logs</div></div>
+  <div class="stat-card"><div class="num">3</div><div class="lbl">Months</div></div>
+  <div class="stat-card"><div class="num">18</div><div class="lbl">Architecture Decisions</div></div>
+  <div class="stat-card"><div class="num">40+</div><div class="lbl">Lessons Learned</div></div>
 </div>
 
-<div class="week">
-  <h3>Week 2 — First Working Prototype</h3>
-  <p class="objective">Objective: Build the first end-to-end conversational prototype.</p>
-  <h4>Built</h4>
-  <ul>
-    <li>Basic chat interface</li>
-    <li>Initial LLM integration</li>
-    <li>Streaming responses</li>
-  </ul>
-  <h4>Challenges</h4>
-  <ul>
-    <li>Generic responses</li>
-    <li>No enterprise knowledge</li>
-    <li>No conversation history</li>
-  </ul>
-  <p class="lesson">The next milestone should focus on grounding responses using enterprise knowledge.</p>
+<!-- ARCHITECTURE PREVIEW -->
+<div class="arch-preview" id="architecture">
+  <h2>Current Architecture</h2>
+  <p>Enterprise Authentication · Multi-Model Routing · Retrieval Orchestration · AI Governance · Production Observability</p>
+
+  <!-- Architecture Diagrams -->
+  <style>
+    .arch-img-wrap {
+      border-radius: 14px; overflow: hidden; border: 1px solid #eee;
+      margin-bottom: 2rem; opacity: 0; transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease, box-shadow 0.3s;
+    }
+    .arch-img-wrap.visible { opacity: 1; transform: translateY(0); }
+    .arch-img-wrap:hover { box-shadow: 0 8px 30px rgba(124,58,237,0.12); }
+    .arch-img-wrap img {
+      width: 100%; display: block;
+      transition: transform 0.5s ease;
+    }
+    .arch-img-wrap:hover img { transform: scale(1.02); }
+    .arch-img-wrap .arch-overlay {
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(26,26,46,0.88); display: flex; align-items: center;
+      justify-content: center; padding: 2rem; opacity: 0;
+      transition: opacity 0.4s ease; border-radius: 14px;
+    }
+    .arch-img-wrap:hover .arch-overlay { opacity: 1; }
+    .arch-img-wrap .arch-overlay p {
+      color: #fff; font-size: 0.88rem; line-height: 1.7; text-align: center; max-width: 500px;
+    }
+    .arch-img-wrap { position: relative; }
+  </style>
+  <h3 style="font-size:1rem; color:#1a1a1a; margin-top:2.5rem; margin-bottom:1rem;">Platform Overview</h3>
+  <div class="arch-img-wrap">
+    <img src="https://raw.githubusercontent.com/sprasadhpy/enterprise-llm-platform/main/docs/assets/image1.png" alt="EntainGPT Platform Architecture - Basic"/>
+    <div class="arch-overlay"><p>PoC architecture: Entain employees access the platform via a web browser. The frontend handles authentication (Cognito SSO), load balancing, and serves React UI + Streamlit Dashboard. Microservices handle chat completions, conversations, messages, files, and feedback. LiteLLM routes to Claude and Nova models. RAG pipeline uses Bedrock Knowledge Base and OpenSearch Serverless. Data persists in DynamoDB and S3.</p></div>
+  </div>
+
+  <h3 style="font-size:1rem; color:#1a1a1a; margin-top:1.5rem; margin-bottom:1rem;">Production Architecture (VPC)</h3>
+  <div class="arch-img-wrap">
+    <img src="https://raw.githubusercontent.com/sprasadhpy/enterprise-llm-platform/main/docs/assets/image2_architecture.png" alt="EntainGPT Production Architecture - Extended VPC"/>
+    <div class="arch-overlay"><p>Production VPC architecture: Full deployment within AWS VPC. EKS orchestrates containers. ALB handles traffic distribution. ReactUI frontend connects to all microservices (Chat Completions, Files, Conversations, Messages, Dashboard, Feedback). LiteLLM gateway routes to Claude Family, Nova Family (via Bedrock) and GPT Family (via Azure OpenAI endpoint). RAG powered by OpenSearch Serverless Index + Bedrock Knowledge Base. S3 buckets for guardrails, file uploads, and feedback storage.</p></div>
+  </div>
 </div>
 
-<div class="week">
-  <h3>Week 3 — Knowledge Retrieval</h3>
-  <p class="objective">Objective: Improve factual accuracy.</p>
-  <h4>Topics Explored</h4>
-  <ul>
-    <li>Embeddings</li>
-    <li>Vector databases</li>
-    <li>Retrieval-Augmented Generation</li>
-    <li>Document chunking</li>
-    <li>Prompt construction</li>
-  </ul>
-  <h4>Architecture Decisions</h4>
-  <ul>
-    <li>Separate retrieval from generation.</li>
-    <li>Keep the retrieval layer model-agnostic.</li>
-    <li>Allow future support for multiple knowledge sources.</li>
-  </ul>
-  <h4>Open Questions</h4>
-  <ul>
-    <li>Chunk size</li>
-    <li>Metadata filtering</li>
-    <li>Ranking strategies</li>
-  </ul>
+<!-- ENTAINGPT LAUNCH -->
+<style>
+  .launch-section {
+    max-width: 1100px; margin: 0 auto 3rem; padding: 0 2rem;
+  }
+  .launch-section h2 {
+    font-size: 1.4rem; font-weight: 700; color: #1a1a1a; margin-bottom: 6px;
+  }
+  .launch-section h2::after {
+    content: ''; display: block; width: 40px; height: 3px;
+    background: #7c3aed; margin-top: 6px; border-radius: 2px;
+  }
+  .launch-section .launch-sub { color: #888; font-size: 0.85rem; margin-bottom: 2rem; }
+  .launch-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: start;
+  }
+  .launch-content p { font-size: 0.88rem; color: #444; line-height: 1.8; margin-bottom: 1rem; }
+  .launch-content .launch-date {
+    display: inline-block; padding: 0.4rem 1rem; background: #f5f0ff;
+    color: #7c3aed; font-size: 0.78rem; font-weight: 700; border-radius: 20px; margin-bottom: 1rem;
+  }
+  .launch-phases { margin-top: 1.5rem; }
+  .launch-phase {
+    margin-bottom: 1.5rem; padding: 1.2rem 1.5rem;
+    background: #fff; border: 1px solid #eee; border-radius: 10px;
+    border-left: 3px solid #7c3aed;
+  }
+  .launch-phase h4 { font-size: 0.88rem; color: #1a1a1a; margin-bottom: 6px; }
+  .launch-phase ul { padding-left: 16px; }
+  .launch-phase li { font-size: 0.82rem; color: #555; margin-bottom: 3px; }
+  .launch-visual {
+    display: flex; align-items: center; justify-content: center;
+    background: #1a1a2e; border-radius: 14px; padding: 2rem; min-height: 420px;
+  }
+  .launch-visual svg { width: 100%; max-width: 320px; }
+  .launch-values {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.5rem;
+  }
+  .launch-value {
+    padding: 1rem; background: #fafafa; border: 1px solid #eee; border-radius: 8px; text-align: center;
+  }
+  .launch-value .lv-icon { font-size: 1.3rem; margin-bottom: 4px; }
+  .launch-value p { font-size: 0.78rem; color: #555; }
+  @media (max-width: 900px) {
+    .launch-grid { grid-template-columns: 1fr; }
+    .launch-visual { min-height: 300px; }
+  }
+</style>
+
+<div class="launch-section" id="entaingpt">
+  <h2>How We Launched EntainGPT</h2>
+  <p class="launch-sub">From security concern to enterprise-wide AI assistant in 12 weeks</p>
+
+  <div class="launch-grid">
+    <div class="launch-content">
+      <span class="launch-date">Released: 13 June 2025</span>
+      <p>EntainGPT began as <strong>Prometheus</strong>, an initiative to replace unregulated ChatGPT usage across 25,000 employees. The core problem: staff were using personal ChatGPT accounts, exposing PII, HR data, and confidential information to external systems with no governance or audit trail.</p>
+      <p>We built a secure, enterprise-grade AI assistant platform as a viable alternative, with proper authentication, multi-model routing, monitoring, and compliance baked in from day one.</p>
+
+      <div class="launch-phases">
+        <div class="launch-phase">
+          <h4>Phase 1: Basic Interactive UI</h4>
+          <ul>
+            <li>ChatGPT-like stateless UI for text interactions</li>
+            <li>SSO authentication with user profiles</li>
+            <li>Basic usage monitoring and audit logging</li>
+            <li>Model selection and routing (Claude, GPT, Gemini)</li>
+            <li>Session management (current session only)</li>
+            <li>Response latency target: &lt;3 seconds</li>
+            <li>SSO authentication time: &lt;1.5 seconds</li>
+          </ul>
+        </div>
+        <div class="launch-phase">
+          <h4>Phase 2: Session Management & Context</h4>
+          <ul>
+            <li>Session affinity and conversation history</li>
+            <li>Expanded context window capabilities</li>
+            <li>Enhanced monitoring and audit trail</li>
+            <li>Document storage with Entain data integration</li>
+          </ul>
+        </div>
+        <div class="launch-phase">
+          <h4>Phase 3: Advanced Features</h4>
+          <ul>
+            <li>Fine-grained model selection and optimization</li>
+            <li>Advanced security features and PII detection</li>
+            <li>Department-specific customizations</li>
+            <li>Integration with internal systems and documents</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="launch-values">
+        <div class="launch-value"><div class="lv-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="11" width="18" height="11" rx="3" stroke="#7c3aed" stroke-width="2"/><path d="M7 11V7a5 5 0 0110 0v4" stroke="#7c3aed" stroke-width="2" stroke-linecap="round"/></svg></div><p>Eliminate PII exposure from personal ChatGPT</p></div>
+        <div class="launch-value"><div class="lv-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4" stroke="#22C55E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="#22C55E" stroke-width="2"/></svg></div><p>Full compliance with data policies</p></div>
+        <div class="launch-value"><div class="lv-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="#7c3aed" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><p>Centralized AI for all 25K employees</p></div>
+        <div class="launch-value"><div class="lv-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" stroke="#22C55E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><p>Optimized cost via model routing</p></div>
+      </div>
+    </div>
+
+    <div class="launch-visual">
+      <svg viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <style>
+            .lg-node { opacity: 0; }
+            .lg-line { stroke-dasharray: 60; stroke-dashoffset: 60; }
+            .lg-n1 { animation: lgFade 0.5s ease forwards 0.3s; }
+            .lg-n2 { animation: lgFade 0.5s ease forwards 0.7s; }
+            .lg-n3 { animation: lgFade 0.5s ease forwards 1.1s; }
+            .lg-n4 { animation: lgFade 0.5s ease forwards 1.5s; }
+            .lg-n5 { animation: lgFade 0.5s ease forwards 1.9s; }
+            .lg-n6 { animation: lgFade 0.5s ease forwards 1.9s; }
+            .lg-n7 { animation: lgFade 0.5s ease forwards 1.9s; }
+            .lg-n8 { animation: lgFade 0.5s ease forwards 2.3s; }
+            .lg-l1 { animation: lgDraw 0.4s ease forwards 0.5s; }
+            .lg-l2 { animation: lgDraw 0.4s ease forwards 0.9s; }
+            .lg-l3 { animation: lgDraw 0.4s ease forwards 1.3s; }
+            .lg-l4 { animation: lgDraw 0.4s ease forwards 1.7s; }
+            .lg-l5 { animation: lgDraw 0.4s ease forwards 1.7s; }
+            .lg-l6 { animation: lgDraw 0.4s ease forwards 1.7s; }
+            .lg-l7 { animation: lgDraw 0.4s ease forwards 2.1s; }
+            .lg-pulse { animation: lgPulse 2.5s ease-in-out infinite 2.5s; }
+            @keyframes lgFade { to { opacity: 1; } }
+            @keyframes lgDraw { to { stroke-dashoffset: 0; } }
+            @keyframes lgPulse {
+              0%, 100% { filter: drop-shadow(0 0 0px #7c3aed); }
+              50% { filter: drop-shadow(0 0 10px #7c3aed); }
+            }
+          </style>
+        </defs>
+
+        <!-- Employee -->
+        <g class="lg-node lg-n1">
+          <rect x="100" y="10" width="100" height="30" rx="6" fill="#7c3aed"/>
+          <text x="150" y="30" text-anchor="middle" fill="#fff" font-size="11" font-weight="600" font-family="inherit">Employee</text>
+        </g>
+        <!-- SSO -->
+        <g class="lg-node lg-n2">
+          <rect x="90" y="70" width="120" height="28" rx="6" fill="#0f3460"/>
+          <text x="150" y="89" text-anchor="middle" fill="#e0e0e0" font-size="10" font-family="inherit">SSO Auth</text>
+        </g>
+        <!-- EntainGPT -->
+        <g class="lg-node lg-n3 lg-pulse">
+          <rect x="75" y="130" width="150" height="34" rx="8" fill="#7c3aed"/>
+          <text x="150" y="152" text-anchor="middle" fill="#fff" font-size="12" font-weight="700" font-family="inherit">EntainGPT</text>
+        </g>
+        <!-- Router -->
+        <g class="lg-node lg-n4">
+          <rect x="85" y="198" width="130" height="28" rx="6" fill="#16213e"/>
+          <text x="150" y="217" text-anchor="middle" fill="#e0e0e0" font-size="10" font-family="inherit">Model Router</text>
+        </g>
+        <!-- Models -->
+        <g class="lg-node lg-n5">
+          <rect x="15" y="262" width="72" height="26" rx="5" fill="#0f3460"/>
+          <text x="51" y="279" text-anchor="middle" fill="#e0e0e0" font-size="9" font-family="inherit">Claude</text>
+        </g>
+        <g class="lg-node lg-n6">
+          <rect x="114" y="262" width="72" height="26" rx="5" fill="#0f3460"/>
+          <text x="150" y="279" text-anchor="middle" fill="#e0e0e0" font-size="9" font-family="inherit">GPT-4o</text>
+        </g>
+        <g class="lg-node lg-n7">
+          <rect x="213" y="262" width="72" height="26" rx="5" fill="#0f3460"/>
+          <text x="249" y="279" text-anchor="middle" fill="#e0e0e0" font-size="9" font-family="inherit">Gemini</text>
+        </g>
+        <!-- Monitoring -->
+        <g class="lg-node lg-n8">
+          <rect x="75" y="325" width="150" height="28" rx="6" fill="#1a1a2e" stroke="#7c3aed" stroke-width="1"/>
+          <text x="150" y="344" text-anchor="middle" fill="#b8c5d6" font-size="10" font-family="inherit">Monitoring & Audit</text>
+        </g>
+
+        <!-- Lines -->
+        <line class="lg-line lg-l1" x1="150" y1="40" x2="150" y2="70" stroke="#7c3aed" stroke-width="1.5"/>
+        <line class="lg-line lg-l2" x1="150" y1="98" x2="150" y2="130" stroke="#555" stroke-width="1.5"/>
+        <line class="lg-line lg-l3" x1="150" y1="164" x2="150" y2="198" stroke="#555" stroke-width="1.5"/>
+        <line class="lg-line lg-l4" x1="120" y1="226" x2="51" y2="262" stroke="#4a90d9" stroke-width="1.2"/>
+        <line class="lg-line lg-l5" x1="150" y1="226" x2="150" y2="262" stroke="#4a90d9" stroke-width="1.2"/>
+        <line class="lg-line lg-l6" x1="180" y1="226" x2="249" y2="262" stroke="#4a90d9" stroke-width="1.2"/>
+        <line class="lg-line lg-l7" x1="150" y1="288" x2="150" y2="325" stroke="rgba(124,58,237,0.4)" stroke-width="1.2" stroke-dasharray="4,3"/>
+
+        <!-- AWS Badge -->
+        <text x="150" y="380" text-anchor="middle" fill="#555" font-size="9" font-family="inherit" opacity="0.7">Powered by AWS Bedrock</text>
+      </svg>
+    </div>
+  </div>
 </div>
 
-<div class="week retrospective">
-  <h3>Week 4 — Month One Review</h3>
-  <p class="objective">Retrospective</p>
-  <h4>What Worked</h4>
-  <ul>
-    <li>Conversational interface</li>
-    <li>Initial RAG pipeline</li>
-    <li>Better response quality</li>
-  </ul>
-  <h4>What Didn't</h4>
-  <ul>
-    <li>Retrieval inconsistencies</li>
-    <li>Limited observability</li>
-    <li>High latency</li>
-  </ul>
-  <h4>Next Month Focus</h4>
-  <ul>
-    <li>Multi-model support</li>
-    <li>Authentication</li>
-    <li>Security</li>
-    <li>File understanding</li>
-  </ul>
+<!-- MODEL COMPARISON -->
+<style>
+  .model-section {
+    max-width: 1100px; margin: 0 auto 3rem; padding: 0 2rem;
+  }
+  .model-section h2 {
+    font-size: 1.4rem; font-weight: 700; color: #1a1a1a; margin-bottom: 6px;
+  }
+  .model-section h2::after {
+    content: ''; display: block; width: 40px; height: 3px;
+    background: #7c3aed; margin-top: 6px; border-radius: 2px;
+  }
+  .model-section .model-sub { color: #888; font-size: 0.85rem; margin-bottom: 2rem; }
+  .model-table-wrap {
+    overflow-x: auto; border-radius: 12px; border: 1px solid #eee;
+    background: #fff;
+  }
+  .model-table {
+    width: 100%; border-collapse: collapse; font-size: 0.78rem; min-width: 1000px;
+  }
+  .model-table thead { background: #1a1a2e; }
+  .model-table th {
+    color: #e0e0e0; font-weight: 600; padding: 12px 10px;
+    text-align: left; white-space: nowrap; font-size: 0.72rem;
+    text-transform: uppercase; letter-spacing: 0.03em;
+  }
+  .model-table tbody tr { border-bottom: 1px solid #f0f0f0; transition: background 0.2s; }
+  .model-table tbody tr:hover { background: #f9f5ff; }
+  .model-table td { padding: 10px 10px; color: #444; vertical-align: middle; }
+  .model-table .model-name { font-weight: 700; color: #1a1a1a; white-space: nowrap; }
+  .model-table .badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 0.7rem; font-weight: 600; }
+  .badge-fast { background: #e8f5e9; color: #2e7d32; }
+  .badge-mid { background: #fff3e0; color: #e65100; }
+  .badge-slow { background: #fce4ec; color: #c62828; }
+  .badge-native { background: #f5f0ff; color: #7c3aed; }
+  .badge-external { background: #f0f0f0; color: #666; }
+  .model-legend { display: flex; gap: 1.5rem; margin-top: 1rem; flex-wrap: wrap; }
+  .model-legend span { font-size: 0.75rem; color: #666; display: flex; align-items: center; gap: 4px; }
+  .model-legend .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .dot-fast { background: #2e7d32; }
+  .dot-mid { background: #e65100; }
+  .dot-slow { background: #c62828; }
+</style>
+
+<div class="model-section" id="models">
+  <h2>Model Benchmarking</h2>
+  <p class="model-sub">APIs and hosted models evaluated for the platform</p>
+  <div class="model-table-wrap">
+    <table class="model-table">
+      <thead>
+        <tr><th>Model</th><th>Latency (TTFT)</th><th>Cost / 1M Tokens (In / Out / Cache)</th><th>Privacy</th><th>Streaming</th><th>MMLU / HumanEval</th><th>Best For</th><th>Context</th><th>AWS</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="model-name">ChatGPT o1</td><td><span class="badge badge-slow">~7.7s</span></td><td>$15 / $60 / $7.5</td><td>Private (Enterprise)</td><td>Yes</td><td>~92% / ~90%</td><td>Reasoning, vision, tools</td><td>200k</td><td><span class="badge badge-external">External API</span></td></tr>
+        <tr><td class="model-name">ChatGPT o1-mini</td><td><span class="badge badge-slow">~10.2s</span></td><td>$3 / $12 / $1.5</td><td>Private (Enterprise)</td><td>Yes</td><td>~85% / ~90%</td><td>STEM, coding</td><td>200k</td><td><span class="badge badge-external">External API</span></td></tr>
+        <tr><td class="model-name">ChatGPT 4o</td><td><span class="badge badge-fast">~320ms</span></td><td>$2.5 / $10 / $1.25</td><td>Private (Enterprise)</td><td>Yes</td><td>~88% / ~80-90%</td><td>General AI assistant</td><td>128k</td><td><span class="badge badge-external">External API</span></td></tr>
+        <tr><td class="model-name">ChatGPT 4o mini</td><td><span class="badge badge-fast">~360ms</span></td><td>$0.15 / $0.60 / $0.075</td><td>Private (Enterprise)</td><td>Yes</td><td>~60% / Basic</td><td>Light Q&A, simple bots</td><td>128k</td><td><span class="badge badge-external">External API</span></td></tr>
+        <tr><td class="model-name">Gemini 2.5 Pro</td><td><span class="badge badge-slow">15-33s</span></td><td>$1.25 / $- / $10</td><td>Private; no training</td><td>Yes</td><td>~90% (est.)</td><td>General, vision, multi-lang</td><td>100k+</td><td><span class="badge badge-external">External API</span></td></tr>
+        <tr><td class="model-name">Gemini 2.0 Flash</td><td><span class="badge badge-fast">~290ms</span></td><td>$0.10 / $0.03 / $0.4</td><td>Private</td><td>Yes</td><td>~70-80%</td><td>Conversational AI</td><td>32k</td><td><span class="badge badge-external">External API</span></td></tr>
+        <tr><td class="model-name">Gemini 2.0 Flash-Lite</td><td><span class="badge badge-mid">~400ms</span></td><td>$0.08 / $- / $0.3</td><td>Private</td><td>Yes</td><td>~50%</td><td>Simple, high-scale</td><td>8k</td><td><span class="badge badge-external">External API</span></td></tr>
+        <tr><td class="model-name">Amazon Nova Pro</td><td><span class="badge badge-mid">~1s</span></td><td>$0.92 / $- / $3.68</td><td>AWS-hosted; secure</td><td>Yes</td><td>~GPT-3.5 level</td><td>Q&A, summarization</td><td>300k</td><td><span class="badge badge-native">Native Bedrock</span></td></tr>
+        <tr><td class="model-name">Claude 3 Sonnet</td><td><span class="badge badge-mid">~461ms</span></td><td>$3 / $- / $15</td><td>AWS-secured; private</td><td>Yes</td><td>~80-85% / ~70%</td><td>Document analysis, Q&A</td><td>100k</td><td><span class="badge badge-native">Native Bedrock</span></td></tr>
+        <tr><td class="model-name">Claude 3 Haiku</td><td><span class="badge badge-fast">~301ms</span></td><td>$0.25 / $- / $1.50</td><td>AWS-secured; private</td><td>Yes</td><td>~70%</td><td>Fast bots, summarization</td><td>32k</td><td><span class="badge badge-native">Native Bedrock</span></td></tr>
+        <tr><td class="model-name">Llama 3.2 (3B)</td><td><span class="badge badge-fast">~200ms</span></td><td>$0.10 / $- / $0.17</td><td>Open-source; AWS-contained</td><td>Yes</td><td>&lt;30%</td><td>Simple tasks, custom tuning</td><td>4k</td><td><span class="badge badge-native">Native Bedrock</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="model-legend">
+    <span><span class="dot dot-fast"></span> &lt;400ms (Fast)</span>
+    <span><span class="dot dot-mid"></span> 400ms–2s (Medium)</span>
+    <span><span class="dot dot-slow"></span> &gt;2s (Slow)</span>
+  </div>
 </div>
 
-<!-- OCTOBER 2025 -->
-<h2 class="month-header">October 2025</h2>
+<!-- USAGE ANALYTICS DASHBOARD -->
+<style>
+  .analytics-section {
+    max-width: 1100px; margin: 0 auto 3rem; padding: 0 2rem;
+  }
+  .analytics-section h2 {
+    font-size: 1.4rem; font-weight: 700; color: #1a1a1a; margin-bottom: 6px;
+  }
+  .analytics-section h2::after {
+    content: ''; display: block; width: 40px; height: 3px;
+    background: #7c3aed; margin-top: 6px; border-radius: 2px;
+  }
+  .analytics-section .analytics-sub { color: #888; font-size: 0.85rem; margin-bottom: 2rem; }
+  .kpi-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem; margin-bottom: 2rem;
+  }
+  .kpi-card {
+    background: #fff; border: 1px solid #eee; border-radius: 12px;
+    padding: 1.2rem; text-align: center; transition: box-shadow 0.2s;
+  }
+  .kpi-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.05); }
+  .kpi-card .kpi-val { font-size: 1.4rem; font-weight: 800; color: #7c3aed; }
+  .kpi-card .kpi-lbl { font-size: 0.72rem; color: #777; text-transform: uppercase; letter-spacing: 0.03em; margin-top: 4px; }
+  .chart-card {
+    background: #fff; border: 1px solid #eee; border-radius: 12px;
+    padding: 1.5rem; margin-bottom: 1.5rem;
+  }
+  .chart-card h3 { font-size: 0.95rem; color: #1a1a1a; margin-bottom: 1rem; }
+  .chart-bar-group { display: flex; align-items: flex-end; gap: 8px; height: 180px; padding-top: 20px; }
+  .chart-bar-item { display: flex; flex-direction: column; align-items: center; flex: 1; height: 100%; justify-content: flex-end; }
+  .chart-bar {
+    width: 100%; max-width: 50px; border-radius: 6px 6px 0 0;
+    transition: opacity 0.2s; position: relative;
+  }
+  .chart-bar:hover { opacity: 0.85; }
+  .chart-bar-val {
+    font-size: 0.68rem; font-weight: 700; color: #444;
+    margin-bottom: 4px; text-align: center;
+  }
+  .chart-bar-lbl {
+    font-size: 0.65rem; color: #888; margin-top: 6px; text-align: center;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 60px;
+  }
+  .chart-horiz { margin-top: 0.5rem; }
+  .chart-horiz-item {
+    display: flex; align-items: center; gap: 8px; margin-bottom: 6px;
+  }
+  .chart-horiz-lbl { font-size: 0.72rem; color: #555; width: 110px; text-align: right; flex-shrink: 0; }
+  .chart-horiz-bar {
+    height: 20px; border-radius: 4px; transition: width 0.8s ease;
+    position: relative;
+  }
+  .chart-horiz-val { font-size: 0.68rem; font-weight: 600; color: #444; margin-left: 6px; }
+  .info-card {
+    background: #f9f5ff; border: 1px solid #e8dff5; border-radius: 10px;
+    padding: 1rem 1.2rem; margin-top: 1rem; font-size: 0.82rem; color: #555; line-height: 1.7;
+  }
+  .feedback-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem;
+  }
+  .analytics-footer {
+    text-align: center; font-size: 0.75rem; color: #999; margin-top: 2rem;
+    padding-top: 1rem; border-top: 1px solid #f0f0f0;
+  }
+  @media (max-width: 700px) {
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .feedback-grid { grid-template-columns: 1fr; }
+  }
+</style>
 
-<div class="week">
-  <h3>Week 5 — Multi-Model Architecture</h3>
-  <p class="objective">Objective: Support multiple LLM providers.</p>
-  <h4>Investigated</h4>
-  <ul>
-    <li>Model routing</li>
-    <li>Cost optimization</li>
-    <li>Latency</li>
-    <li>Quality trade-offs</li>
-  </ul>
-  <p class="lesson">Introduce a model gateway rather than coupling the application to a single provider. Different models excel at different tasks.</p>
+<div class="analytics-section" id="analytics">
+  <h2>EntainGPT PoC Usage Analytics</h2>
+  <p class="analytics-sub">Usage statistics from the EntainGPT Proof of Concept – AI Hackathon (21 July 2025)</p>
+
+  <!-- KPI Cards -->
+  <div class="kpi-grid">
+    <div class="kpi-card"><div class="kpi-val">211</div><div class="kpi-lbl">Active Users</div></div>
+    <div class="kpi-card"><div class="kpi-val">119</div><div class="kpi-lbl">Files Uploaded</div></div>
+    <div class="kpi-card"><div class="kpi-val">581,670</div><div class="kpi-lbl">Max Prompt Tokens</div></div>
+    <div class="kpi-card"><div class="kpi-val">4,000</div><div class="kpi-lbl">Max Output Tokens</div></div>
+  </div>
+
+  <!-- Graph 1: File Types -->
+  <div class="chart-card">
+    <h3>Uploaded File Types</h3>
+    <div class="chart-bar-group">
+      <div class="chart-bar-item"><span class="chart-bar-val">11</span><div class="chart-bar" style="height:22%; background:#7c3aed;"></div><span class="chart-bar-lbl">CSV</span></div>
+      <div class="chart-bar-item"><span class="chart-bar-val">7</span><div class="chart-bar" style="height:14%; background:#a78bfa;"></div><span class="chart-bar-lbl">DOCX</span></div>
+      <div class="chart-bar-item"><span class="chart-bar-val">32</span><div class="chart-bar" style="height:64%; background:#6d28d9;"></div><span class="chart-bar-lbl">PDF</span></div>
+      <div class="chart-bar-item"><span class="chart-bar-val">19</span><div class="chart-bar" style="height:38%; background:#8b5cf6;"></div><span class="chart-bar-lbl">TXT</span></div>
+      <div class="chart-bar-item"><span class="chart-bar-val">50</span><div class="chart-bar" style="height:100%; background:#4c1d95;"></div><span class="chart-bar-lbl">XLS/XLSX</span></div>
+    </div>
+  </div>
+
+  <!-- Graph 2: Token Usage -->
+  <div class="chart-card">
+    <h3>Aggregate Token Usage</h3>
+    <div class="chart-bar-group">
+      <div class="chart-bar-item"><span class="chart-bar-val">15,642,239</span><div class="chart-bar" style="height:100%; background:#2563eb;"></div><span class="chart-bar-lbl">Total</span></div>
+      <div class="chart-bar-item"><span class="chart-bar-val">15,306,926</span><div class="chart-bar" style="height:98%; background:#60a5fa;"></div><span class="chart-bar-lbl">Input</span></div>
+      <div class="chart-bar-item"><span class="chart-bar-val">432,791</span><div class="chart-bar" style="height:3%; min-height:16px; background:#ef4444;"></div><span class="chart-bar-lbl">Output</span></div>
+    </div>
+    <div class="info-card">
+      <strong>Token Breakdown:</strong> Input Tokens = User prompt + uploaded file content. Output Tokens = Model response.<br>
+      Maximum prompt consumed by a single user: <strong>581,670 tokens</strong>. Maximum output generated: <strong>4,000 tokens</strong> (model output limit).
+    </div>
+  </div>
+
+  <!-- Feedback Section -->
+  <h3 style="font-size:1.1rem; color:#1a1a1a; margin:2rem 0 1rem;">Feedback Dashboard</h3>
+  <div class="feedback-grid">
+    <div class="kpi-card"><div class="kpi-val">22</div><div class="kpi-lbl">Total Feedback</div></div>
+    <div class="kpi-card"><div class="kpi-val">22</div><div class="kpi-lbl">Positive Feedback</div></div>
+    <div class="kpi-card"><div class="kpi-val">4</div><div class="kpi-lbl">Models Rated</div></div>
+  </div>
+
+  <!-- Graph 5: Feedback by Model -->
+  <div class="chart-card">
+    <h3>Positive Feedback by Model (%)</h3>
+    <div class="chart-bar-group">
+      <div class="chart-bar-item"><span class="chart-bar-val">100%</span><div class="chart-bar" style="height:100%; background:#22c55e;"></div><span class="chart-bar-lbl">Claude 3.7</span></div>
+      <div class="chart-bar-item"><span class="chart-bar-val">100%</span><div class="chart-bar" style="height:100%; background:#16a34a;"></div><span class="chart-bar-lbl">GPT-4.1 mini</span></div>
+      <div class="chart-bar-item"><span class="chart-bar-val">100%</span><div class="chart-bar" style="height:100%; background:#4ade80;"></div><span class="chart-bar-lbl">GPT-4.1 nano</span></div>
+      <div class="chart-bar-item"><span class="chart-bar-val">100%</span><div class="chart-bar" style="height:100%; background:#86efac;"></div><span class="chart-bar-lbl">Nova Pro</span></div>
+    </div>
+  </div>
+
+  <div class="analytics-footer">
+    Source: EntainGPT Usage Statistics AI Hackathon – July 2025 &nbsp;|&nbsp; Generated Analytics Dashboard
+  </div>
 </div>
 
-<div class="week">
-  <h3>Week 6 — Authentication & Enterprise Security</h3>
-  <p class="objective">Objective: Prepare the platform for enterprise users.</p>
-  <h4>Topics</h4>
-  <ul>
-    <li>Identity</li>
-    <li>Authentication</li>
-    <li>Authorization</li>
-    <li>Session management</li>
-    <li>Audit logging</li>
-  </ul>
-  <p class="lesson">Every request should be authenticated before reaching the model.</p>
-</div>
+<!-- CHRONICLES -->
+<div class="chronicles" id="chronicles">
+  <div class="timeline-nav">
+    <ul>
+      <li class="active" data-month="sep"><a href="#sep">September</a><span class="month-label">The Beginning</span></li>
+      <li data-month="oct"><a href="#oct">October</a><span class="month-label">Scaling Up</span></li>
+      <li data-month="nov"><a href="#nov">November</a><span class="month-label">Platform Thinking</span></li>
+    </ul>
+  </div>
 
-<div class="week">
-  <h3>Week 7 — Document Intelligence</h3>
-  <p class="objective">Objective: Enable AI to understand enterprise documents.</p>
-  <h4>Explored</h4>
-  <ul>
-    <li>PDFs</li>
-    <li>Images</li>
-    <li>OCR</li>
-    <li>Document preprocessing</li>
-    <li>Metadata extraction</li>
-  </ul>
-  <h4>Challenges</h4>
-  <ul>
-    <li>Scanned documents</li>
-    <li>Large files</li>
-    <li>Poor OCR quality</li>
-  </ul>
-</div>
+  <div class="chronicles-content">
+    <!-- SEPTEMBER -->
+    <div class="month-section" id="sep">
+      <h2 class="month-header">September 2025</h2>
 
-<div class="week retrospective">
-  <h3>Week 8 — Month Two Review</h3>
-  <p class="objective">Retrospective</p>
-  <h4>Improvements</h4>
-  <ul>
-    <li>Better architecture</li>
-    <li>Modular components</li>
-    <li>More reliable responses</li>
-  </ul>
-  <h4>Remaining Problems</h4>
-  <ul>
-    <li>Prompt consistency</li>
-    <li>Evaluation</li>
-    <li>Monitoring</li>
-  </ul>
-</div>
+      <div class="week-card">
+        <div class="week-card-top">
+          <h3><span class="week-icon">📓</span>Week 1: Project Kickoff</h3>
+          <span class="week-date">1 Sept 2025</span>
+        </div>
+        <p class="objective">Define the vision and scope of the enterprise AI platform.</p>
+        <h4>Questions</h4>
+        <ul>
+          <li>What problem are we solving?</li>
+          <li>Who are the primary users?</li>
+          <li>What does "enterprise-ready" actually mean?</li>
+          <li>What are the non-functional requirements?</li>
+        </ul>
+        <h4>Decisions</h4>
+        <ul>
+          <li>AI assistant rather than a generic chatbot.</li>
+          <li>Security-first architecture.</li>
+          <li>Modular design to support multiple models in the future.</li>
+        </ul>
+        <h4>Deliverables</h4>
+        <ul>
+          <li>Initial architecture diagram</li>
+          <li>Technology evaluation</li>
+          <li>Project roadmap</li>
+        </ul>
+        <p class="lesson">Building enterprise AI starts with understanding business workflows, not choosing a language model.</p>
+      </div>
 
-<!-- NOVEMBER 2025 -->
-<h2 class="month-header">November 2025</h2>
+      <div class="week-card">
+        <div class="week-card-top">
+          <h3><span class="week-icon">📓</span>Week 2: First Working Prototype</h3>
+          <span class="week-date">8 Sept 2025</span>
+        </div>
+        <p class="objective">Build the first end-to-end conversational prototype.</p>
+        <h4>Built</h4>
+        <ul>
+          <li>Basic chat interface</li>
+          <li>Initial LLM integration</li>
+          <li>Streaming responses</li>
+        </ul>
+        <h4>Challenges</h4>
+        <ul>
+          <li>Generic responses</li>
+          <li>No enterprise knowledge</li>
+          <li>No conversation history</li>
+        </ul>
+        <p class="lesson">The next milestone should focus on grounding responses using enterprise knowledge.</p>
+      </div>
 
-<div class="week">
-  <h3>Week 9 — Evaluation Framework</h3>
-  <p class="objective">Objective: Measure AI quality.</p>
-  <h4>Metrics</h4>
-  <ul>
-    <li>Grounding</li>
-    <li>Faithfulness</li>
-    <li>Latency</li>
-    <li>Token usage</li>
-    <li>User feedback</li>
-    <li>Retrieval quality</li>
-  </ul>
-  <p class="lesson">Without metrics, improving AI becomes guesswork.</p>
-</div>
+      <div class="week-card">
+        <div class="week-card-top">
+          <h3><span class="week-icon">📓</span>Week 3: Knowledge Retrieval</h3>
+          <span class="week-date">15 Sept 2025</span>
+        </div>
+        <p class="objective">Improve factual accuracy.</p>
+        <h4>Topics Explored</h4>
+        <ul>
+          <li>Embeddings</li>
+          <li>Vector databases</li>
+          <li>Retrieval-Augmented Generation</li>
+          <li>Document chunking</li>
+          <li>Prompt construction</li>
+        </ul>
+        <h4>Architecture Decisions</h4>
+        <ul>
+          <li>Separate retrieval from generation.</li>
+          <li>Keep the retrieval layer model-agnostic.</li>
+          <li>Allow future support for multiple knowledge sources.</li>
+        </ul>
+        <h4>Open Questions</h4>
+        <ul>
+          <li>Chunk size</li>
+          <li>Metadata filtering</li>
+          <li>Ranking strategies</li>
+        </ul>
+      </div>
 
-<div class="week">
-  <h3>Week 10 — Observability</h3>
-  <p class="objective">Objective: Understand platform behaviour in production.</p>
-  <h4>Added</h4>
-  <ul>
-    <li>Logging</li>
-    <li>Request tracing</li>
-    <li>Performance monitoring</li>
-    <li>Error analysis</li>
-  </ul>
-  <p class="lesson">AI systems need observability just as much as traditional software.</p>
-</div>
+      <div class="week-card retro">
+        <div class="week-card-top">
+          <h3><span class="week-icon">📋</span>Week 4: Month One Review</h3>
+          <span class="week-date">22 Sept 2025</span>
+        </div>
+        <p class="objective">Retrospective</p>
+        <h4>What Worked</h4>
+        <ul>
+          <li>Conversational interface</li>
+          <li>Initial RAG pipeline</li>
+          <li>Better response quality</li>
+        </ul>
+        <h4>What Didn't</h4>
+        <ul>
+          <li>Retrieval inconsistencies</li>
+          <li>Limited observability</li>
+          <li>High latency</li>
+        </ul>
+        <h4>Next Month Focus</h4>
+        <ul>
+          <li>Multi-model support</li>
+          <li>Authentication</li>
+          <li>Security</li>
+          <li>File understanding</li>
+        </ul>
+      </div>
+    </div>
 
-<div class="week">
-  <h3>Week 11 — Platform Thinking</h3>
-  <p class="objective">Objective: Move beyond a chatbot.</p>
-  <h4>Focus</h4>
-  <ul>
-    <li>APIs</li>
-    <li>Reusable services</li>
-    <li>Shared infrastructure</li>
-    <li>Integration points</li>
-  </ul>
-  <p class="lesson">The assistant had become a platform rather than a standalone application.</p>
-</div>
+    <!-- OCTOBER -->
+    <div class="month-section" id="oct">
+      <h2 class="month-header">October 2025</h2>
 
-<div class="week retrospective">
-  <h3>Week 12 — Three-Month Retrospective</h3>
-  <p class="objective">Quarter Review</p>
-  <h4>Major Milestones</h4>
-  <ul>
-    <li>Enterprise architecture established</li>
-    <li>Knowledge retrieval integrated</li>
-    <li>Multi-model foundation created</li>
-    <li>Security-first design</li>
-    <li>Evaluation pipeline introduced</li>
-    <li>Production readiness significantly improved</li>
-  </ul>
-  <h4>Key Engineering Lessons</h4>
-  <ul>
-    <li>Architecture matters more than model choice.</li>
-    <li>Retrieval quality determines response quality.</li>
-    <li>Security must be built in from day one.</li>
-    <li>Evaluation is an ongoing process.</li>
-    <li>Enterprise AI is a platform, not a feature.</li>
-  </ul>
-  <h4>Next Quarter</h4>
-  <ul>
-    <li>AI agents</li>
-    <li>Workflow automation</li>
-    <li>Long-term memory</li>
-    <li>Human-in-the-loop evaluation</li>
-    <li>Advanced governance</li>
-    <li>Autonomous orchestration</li>
-  </ul>
-</div>
+      <div class="week-card">
+        <div class="week-card-top">
+          <h3><span class="week-icon">📓</span>Week 5: Multi-Model Architecture</h3>
+          <span class="week-date">6 Oct 2025</span>
+        </div>
+        <p class="objective">Support multiple LLM providers.</p>
+        <h4>Investigated</h4>
+        <ul>
+          <li>Model routing</li>
+          <li>Cost optimization</li>
+          <li>Latency</li>
+          <li>Quality trade-offs</li>
+        </ul>
+        <h4>Decision</h4>
+        <ul>
+          <li>Introduce a model gateway rather than coupling to a single provider.</li>
+        </ul>
+        <p class="lesson">Different models excel at different tasks.</p>
+      </div>
 
+      <div class="week-card">
+        <div class="week-card-top">
+          <h3><span class="week-icon">📓</span>Week 6: Authentication & Enterprise Security</h3>
+          <span class="week-date">13 Oct 2025</span>
+        </div>
+        <p class="objective">Prepare the platform for enterprise users.</p>
+        <h4>Topics</h4>
+        <ul>
+          <li>Identity</li>
+          <li>Authentication</li>
+          <li>Authorization</li>
+          <li>Session management</li>
+          <li>Audit logging</li>
+        </ul>
+        <p class="lesson">Every request should be authenticated before reaching the model.</p>
+      </div>
+
+      <div class="week-card">
+        <div class="week-card-top">
+          <h3><span class="week-icon">📓</span>Week 7: Document Intelligence</h3>
+          <span class="week-date">20 Oct 2025</span>
+        </div>
+        <p class="objective">Enable AI to understand enterprise documents.</p>
+        <h4>Explored</h4>
+        <ul>
+          <li>PDFs</li>
+          <li>Images</li>
+          <li>OCR</li>
+          <li>Document preprocessing</li>
+          <li>Metadata extraction</li>
+        </ul>
+        <h4>Challenges</h4>
+        <ul>
+          <li>Scanned documents</li>
+          <li>Large files</li>
+          <li>Poor OCR quality</li>
+        </ul>
+      </div>
+
+      <div class="week-card retro">
+        <div class="week-card-top">
+          <h3><span class="week-icon">📋</span>Week 8: Month Two Review</h3>
+          <span class="week-date">27 Oct 2025</span>
+        </div>
+        <p class="objective">Retrospective</p>
+        <h4>Improvements</h4>
+        <ul>
+          <li>Better architecture</li>
+          <li>Modular components</li>
+          <li>More reliable responses</li>
+        </ul>
+        <h4>Remaining Problems</h4>
+        <ul>
+          <li>Prompt consistency</li>
+          <li>Evaluation</li>
+          <li>Monitoring</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- NOVEMBER -->
+    <div class="month-section" id="nov">
+      <h2 class="month-header">November 2025</h2>
+
+      <div class="week-card">
+        <div class="week-card-top">
+          <h3><span class="week-icon">📓</span>Week 9: Evaluation Framework</h3>
+          <span class="week-date">3 Nov 2025</span>
+        </div>
+        <p class="objective">Measure AI quality.</p>
+        <h4>Metrics</h4>
+        <ul>
+          <li>Grounding</li>
+          <li>Faithfulness</li>
+          <li>Latency</li>
+          <li>Token usage</li>
+          <li>User feedback</li>
+          <li>Retrieval quality</li>
+        </ul>
+        <p class="lesson">Without metrics, improving AI becomes guesswork.</p>
+      </div>
+
+      <div class="week-card">
+        <div class="week-card-top">
+          <h3><span class="week-icon">📓</span>Week 10: Observability</h3>
+          <span class="week-date">10 Nov 2025</span>
+        </div>
+        <p class="objective">Understand platform behaviour in production.</p>
+        <h4>Added</h4>
+        <ul>
+          <li>Logging</li>
+          <li>Request tracing</li>
+          <li>Performance monitoring</li>
+          <li>Error analysis</li>
+        </ul>
+        <p class="lesson">AI systems need observability just as much as traditional software.</p>
+      </div>
+
+      <div class="week-card">
+        <div class="week-card-top">
+          <h3><span class="week-icon">📓</span>Week 11: Platform Thinking</h3>
+          <span class="week-date">17 Nov 2025</span>
+        </div>
+        <p class="objective">Move beyond a chatbot.</p>
+        <h4>Focus</h4>
+        <ul>
+          <li>APIs</li>
+          <li>Reusable services</li>
+          <li>Shared infrastructure</li>
+          <li>Integration points</li>
+        </ul>
+        <p class="lesson">The assistant had become a platform rather than a standalone application.</p>
+      </div>
+
+      <div class="week-card retro">
+        <div class="week-card-top">
+          <h3><span class="week-icon">📋</span>Week 12: Three-Month Retrospective</h3>
+          <span class="week-date">24 Nov 2025</span>
+        </div>
+        <p class="objective">Quarter Review</p>
+        <h4>Major Milestones</h4>
+        <ul>
+          <li>Enterprise architecture established</li>
+          <li>Knowledge retrieval integrated</li>
+          <li>Multi-model foundation created</li>
+          <li>Security-first design</li>
+          <li>Evaluation pipeline introduced</li>
+          <li>Production readiness significantly improved</li>
+        </ul>
+        <h4>Key Engineering Lessons</h4>
+        <ul>
+          <li>Architecture matters more than model choice.</li>
+          <li>Retrieval quality determines response quality.</li>
+          <li>Security must be built in from day one.</li>
+          <li>Evaluation is an ongoing process.</li>
+          <li>Enterprise AI is a platform, not a feature.</li>
+        </ul>
+        <h4>Next Quarter</h4>
+        <ul>
+          <li>AI agents</li>
+          <li>Workflow automation</li>
+          <li>Long-term memory</li>
+          <li>Human-in-the-loop evaluation</li>
+          <li>Advanced governance</li>
+          <li>Autonomous orchestration</li>
+        </ul>
+      </div>
+    </div>
+
+  </div><!-- end chronicles-content -->
+</div><!-- end chronicles -->
+
+<!-- FOOTER -->
 <footer>
-  <p>Shyaam Prasadh &nbsp;|&nbsp; <a href="https://sprasadhpy.github.io">sprasadhpy.github.io</a> &nbsp;|&nbsp; <a href="https://github.com/sprasadhpy">GitHub</a></p>
+  <div class="footer-links">
+    <a href="#hero">Home</a>
+    <a href="#chronicles">Chronicles</a>
+    <a href="#architecture">Architecture</a>
+    <a href="https://sprasadhpy.github.io" target="_blank">Main Site</a>
+    <a href="https://github.com/sprasadhpy" target="_blank">GitHub</a>
+  </div>
+  <p>&copy; 2025 Shyaam Prasadh. Built with purpose.</p>
 </footer>
+
+<script>
+// Fade in week cards
+const cardObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+document.querySelectorAll('.week-card').forEach(el => cardObs.observe(el));
+document.querySelectorAll('.arch-img-wrap').forEach(el => cardObs.observe(el));
+
+// Timeline active state
+const months = document.querySelectorAll('.month-section');
+const timelineItems = document.querySelectorAll('.timeline-nav li');
+window.addEventListener('scroll', () => {
+  let current = '';
+  months.forEach(m => {
+    if (window.scrollY >= m.offsetTop - 200) current = m.id;
+  });
+  timelineItems.forEach(li => {
+    li.classList.remove('active');
+    if (li.dataset.month === current) li.classList.add('active');
+  });
+});
+
+// Mobile nav
+document.getElementById('hamburger').addEventListener('click', () => {
+  document.getElementById('navLinks').classList.toggle('open');
+});
+</script>
 
 </body>
 </html>
