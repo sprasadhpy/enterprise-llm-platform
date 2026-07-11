@@ -86,6 +86,7 @@
           <li><a href="#sep">September</a></li>
           <li><a href="#oct">October</a></li>
           <li><a href="#nov">November</a></li>
+          <li><a href="#dec">December</a></li>
         </ul>
       </li>
       <li><a href="https://github.com/sprasadhpy" target="_blank">GitHub</a></li>
@@ -377,8 +378,8 @@
 
 <!-- STATS -->
 <div class="stats-bar">
-  <div class="stat-card"><div class="num">12</div><div class="lbl">Engineering Logs</div></div>
-  <div class="stat-card"><div class="num">3</div><div class="lbl">Months</div></div>
+  <div class="stat-card"><div class="num">15</div><div class="lbl">Engineering Logs</div></div>
+  <div class="stat-card"><div class="num">4</div><div class="lbl">Months</div></div>
   <div class="stat-card"><div class="num">18</div><div class="lbl">Architecture Decisions</div></div>
   <div class="stat-card"><div class="num">40+</div><div class="lbl">Lessons Learned</div></div>
 </div>
@@ -827,6 +828,7 @@
       <li class="active" data-month="sep"><a href="#sep">September</a><span class="month-label">The Beginning</span></li>
       <li data-month="oct"><a href="#oct">October</a><span class="month-label">Scaling Up</span></li>
       <li data-month="nov"><a href="#nov">November</a><span class="month-label">Platform Thinking</span></li>
+      <li data-month="dec"><a href="#dec">December</a><span class="month-label">Long Context</span></li>
     </ul>
   </div>
 
@@ -1109,6 +1111,99 @@
           <li>Human-in-the-loop evaluation</li>
           <li>Advanced governance</li>
           <li>Autonomous orchestration</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- DECEMBER -->
+    <div class="month-section" id="dec">
+      <h2 class="month-header">December 2025</h2>
+
+      <div class="week-card">
+        <div class="week-card-top">
+          <h3><span class="week-icon">📓</span>Week 13: LongContext+ Rolling Summary</h3>
+          <span class="week-date">1 Dec 2025</span>
+        </div>
+        <p class="objective">Extend the effective conversational context while remaining within model context limits.</p>
+        <h4>Investigated</h4>
+        <ul>
+          <li>Context window limitations</li>
+          <li>Rolling summaries</li>
+          <li>Conversation compression</li>
+          <li>Token efficiency</li>
+          <li>Memory evaluation</li>
+        </ul>
+        <h4>Implemented</h4>
+        <ul>
+          <li>Rolling Summary architecture</li>
+          <li>Automatic context compression</li>
+          <li>Conversation continuity</li>
+          <li>Summary insertion pipeline</li>
+        </ul>
+        <h4>Evaluation</h4>
+        <ul>
+          <li>XSum</li>
+          <li>SAMSum</li>
+          <li>DialogSum</li>
+          <li>ROUGE-1 / ROUGE-2 / ROUGE-L</li>
+          <li>BERTScore</li>
+        </ul>
+        <p class="lesson">Summarizing historical conversations preserved context while significantly reducing token consumption.</p>
+        <a href="https://sprasadhpy.github.io/enterprise-llm-platform/chronicles/memory-management.html" target="_blank" style="display:inline-flex; align-items:center; gap:6px; margin-top:12px; padding:0.4rem 1rem; background:#f5f0ff; color:#7c3aed; border:1px solid rgba(124,58,237,0.2); border-radius:8px; text-decoration:none; font-size:0.8rem; font-weight:600;">Read Full Report &rarr;</a>
+      </div>
+
+      <div class="week-card">
+        <div class="week-card-top">
+          <h3><span class="week-icon">📓</span>Week 14: LongContext+ v2 Dynamic Memory</h3>
+          <span class="week-date">8 Dec 2025</span>
+        </div>
+        <p class="objective">Move beyond summarization toward adaptive long-term memory.</p>
+        <h4>Explored</h4>
+        <ul>
+          <li>Dynamic Memory</li>
+          <li>MemGPT / Letta</li>
+          <li>Persistent memory</li>
+          <li>File-aware context</li>
+          <li>Recursive summarization</li>
+          <li>Stateful agents</li>
+        </ul>
+        <h4>Implemented</h4>
+        <ul>
+          <li>Character-based memory thresholds</li>
+          <li>Large file handling</li>
+          <li>Recursive chunk summarization</li>
+          <li>File-aware memory retention</li>
+        </ul>
+        <h4>Benchmarked</h4>
+        <ul>
+          <li>Rolling Summary vs Dynamic Memory</li>
+          <li>Latency</li>
+          <li>ROUGE comparison</li>
+          <li>Production scalability</li>
+        </ul>
+        <p class="lesson">Rolling Summary offered the best balance of quality, latency, and operational cost for production, while Dynamic Memory remained a promising research direction for future stateful agents.</p>
+        <a href="https://sprasadhpy.github.io/enterprise-llm-platform/chronicles/memory-management.html" target="_blank" style="display:inline-flex; align-items:center; gap:6px; margin-top:12px; padding:0.4rem 1rem; background:#f5f0ff; color:#7c3aed; border:1px solid rgba(124,58,237,0.2); border-radius:8px; text-decoration:none; font-size:0.8rem; font-weight:600;">Read Full Report &rarr;</a>
+      </div>
+
+      <div class="week-card retro">
+        <div class="week-card-top">
+          <h3><span class="week-icon">📋</span>Week 15: Month Three Review</h3>
+          <span class="week-date">15 Dec 2025</span>
+        </div>
+        <p class="objective">Retrospective</p>
+        <h4>Highlights</h4>
+        <ul>
+          <li>LongContext+ research completed</li>
+          <li>Production memory pipeline</li>
+          <li>Better long-context handling</li>
+          <li>Evaluation framework established</li>
+        </ul>
+        <h4>Remaining Challenges</h4>
+        <ul>
+          <li>Persistent user memory</li>
+          <li>Personalization</li>
+          <li>Cross-session reasoning</li>
+          <li>Agentic workflows</li>
         </ul>
       </div>
     </div>
