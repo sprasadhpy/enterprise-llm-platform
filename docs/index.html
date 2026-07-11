@@ -399,10 +399,11 @@
     .arch-img-wrap.visible { opacity: 1; transform: translateY(0); }
     .arch-img-wrap:hover { box-shadow: 0 8px 30px rgba(124,58,237,0.12); }
     .arch-img-wrap img {
+      filter: blur(8px);
       width: 100%; display: block;
-      transition: transform 0.5s ease;
+      transition: transform 0.5s ease, filter 0.5s ease;
     }
-    .arch-img-wrap:hover img { transform: scale(1.02); }
+    .arch-img-wrap:hover img { transform: scale(1.02); filter: blur(0); }
     .arch-img-wrap .arch-overlay {
       position: absolute; top: 0; left: 0; right: 0; bottom: 0;
       background: rgba(26,26,46,0.88); display: flex; align-items: center;
